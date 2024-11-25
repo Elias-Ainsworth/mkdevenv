@@ -1,0 +1,10 @@
+[package]
+name = "mkdevenv"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.21", features = ["derive"] }
+clap_complete = "4.5.38"
+dircpy = "0.3.19"
+execute = "0.2.13"
