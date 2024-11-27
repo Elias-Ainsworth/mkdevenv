@@ -4,17 +4,23 @@ use mkdevenv::*;
 use std::io;
 
 fn main() -> Result<(), io::Error> {
-    let mkargs = MkdevenvArgs::parse();
-    if let Some(command) = mkargs.command.as_ref() {
+    let args = MkdevenvArgs::parse();
+    if let Some(command) = args.command.as_ref() {
         match command {
             MkdevenvSubcommand::Generate(args) => {
-                completions(args)?;
+                generate_completions(args)?;
             }
             MkdevenvSubcommand::Init(args) => {
-                rec_copy(args)?;
+                initialize(args)?;
             }
             MkdevenvSubcommand::Remove(args) => remove(args)?,
+            MkdevenvSubcommand::Allow(args) => direnv_allow(args)?,
+            MkdevenvSubcommand::Revoke(args) => direnv_revoke(args)?,
         }
     }
+    // TODO: Handle errors in a way that doesn't throw false-positives
+    direnv_allow(args.direnv_allow);
+    direnv_revoke(args.direnv_revoke);
+    cargo_init(args.cargo_init);
     Ok(())
 }

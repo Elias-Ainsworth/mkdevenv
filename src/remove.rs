@@ -1,5 +1,5 @@
-use crate::cli::DirenvArgs;
-use std::{fs, io, path::Path, process::Command};
+use crate::{cli::DirenvArgs, direnv_revoke};
+use std::{fs, io, path::Path};
 
 pub fn remove(args: &DirenvArgs) -> Result<(), io::Error> {
     if args.target.as_ref().is_some_and(|x| {
@@ -12,12 +12,10 @@ pub fn remove(args: &DirenvArgs) -> Result<(), io::Error> {
                 format!("{}.devenv", target.display()),
             );
 
-            println!("Attempting to remove: {}", &direnv);
             fs::remove_dir_all(&direnv)?;
-            println!("Attempting to remove: {}", &devenv);
             fs::remove_dir_all(&devenv)?;
 
-            Command::new("direnv").arg("revoke").arg(target).spawn()?;
+            direnv_revoke(args)?;
         } else {
             eprintln!("Error: target is not provided");
         }

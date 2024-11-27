@@ -1,11 +1,11 @@
 pub mod cli;
-pub mod direnv_allow;
-pub mod generate;
-pub mod rec_copy;
+pub mod completions;
+pub mod direnv;
+pub mod init;
 pub mod remove;
 
 pub use cli::*;
-pub use direnv_allow::direnv_allow;
-pub use generate::completions;
-pub use rec_copy::rec_copy;
+pub use completions::generate_completions;
+pub use direnv::{cargo_init, direnv_allow, direnv_revoke};
+pub use init::initialize;
 pub use remove::remove;
