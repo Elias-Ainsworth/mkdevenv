@@ -43,6 +43,7 @@ pub enum MkdevenvSubcommand {
         about = "Remove devenv and direnv files and revoke direnv permission."
     )]
     Remove(DirenvArgs),
+    //TODO: Add 'allow' and 'revoke' commands.
 }
 
 #[derive(Parser, Debug)]
@@ -53,7 +54,4 @@ pub enum MkdevenvSubcommand {
 pub struct MkdevenvArgs {
     #[command(subcommand)]
     pub command: Option<MkdevenvSubcommand>,
-
-    #[arg(action, value_hint = clap::ValueHint::AnyPath, value_name = "PATH", help = "Automatically execute 'direnv allow'")]
-    pub direnv_allow: Option<PathBuf>,
 }
