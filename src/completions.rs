@@ -4,7 +4,7 @@ use crate::cli::{GenerateArgs, MkdevenvArgs, ShellCompletion};
 use clap::CommandFactory;
 use clap_complete::{generate, Shell};
 
-pub fn completions(args: &GenerateArgs) -> Result<(), io::Error> {
+pub fn generate_completions(args: &GenerateArgs) -> Result<(), io::Error> {
     let mut cmd = MkdevenvArgs::command();
     match &args.shell {
         ShellCompletion::Bash => {

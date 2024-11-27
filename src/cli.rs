@@ -33,17 +33,24 @@ pub struct DirenvArgs {
 pub enum MkdevenvSubcommand {
     #[command(name = "generate", about = "Generate shell completions", hide = true)]
     Generate(GenerateArgs),
+
     #[command(
         name = "init",
         about = "Intialize dev environment for specified language in specified directory."
     )]
     Init(InitArgs),
+
     #[command(
         name = "remove",
         about = "Remove devenv and direnv files and revoke direnv permission."
     )]
     Remove(DirenvArgs),
-    //TODO: Add 'allow' and 'revoke' commands.
+
+    #[command(name = "allow", about = "Allow direnv for specified directory.")]
+    Allow(DirenvArgs),
+
+    #[command(name = "revoke", about = "Revoke direnv for specified directory.")]
+    Revoke(DirenvArgs),
 }
 
 #[derive(Parser, Debug)]
@@ -54,4 +61,13 @@ pub enum MkdevenvSubcommand {
 pub struct MkdevenvArgs {
     #[command(subcommand)]
     pub command: Option<MkdevenvSubcommand>,
+
+    #[arg(long, short = 'a')]
+    pub direnv_allow: Option<PathBuf>,
+
+    #[arg(long, short = 'r')]
+    pub direnv_revoke: Option<PathBuf>,
+
+    #[arg(long, short = 'c')]
+    pub cargo_init: Option<PathBuf>,
 }
